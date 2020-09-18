@@ -6,7 +6,7 @@
 			</el-col>
 			<el-col :span="19">
 				<el-button type="primary" icon="el-icon-search" plain @click="searchData()">搜索</el-button>
-				<el-button type="primary" icon="el-icon-circle-plus-outline" plain @click="add()">添加常数类别</el-button>
+				<el-button type="primary" icon="el-icon-circle-plus-outline" plain @click="add()">添加常数项</el-button>
 				<el-button type="warning" icon="el-icon-delete" plain @click="batchdel()">批量删除</el-button>
 			</el-col>
 		</el-row>
@@ -15,9 +15,13 @@
 			</el-table-column>
 			<el-table-column label="ID" width="80" prop="id">
 			</el-table-column>
+			<el-table-column label="常数项类型" width="90" prop="typeName">
+			</el-table-column>
 			<el-table-column label="编码" prop="code">
 			</el-table-column>
-			<el-table-column label="常数类别名" prop="name">
+			<el-table-column label="名称" prop="name">
+			</el-table-column>
+			<el-table-column label="顺序号" prop="sort">
 			</el-table-column>
 
 			<el-table-column label="是否有效" width="100">
@@ -42,15 +46,15 @@
 		 :current-page.sync="query.pageNo" :page-size="query.pageSize" @current-change="getData()">
 		</el-pagination>
 		<el-dialog :title="title" :visible.sync="show" :close-on-click-modal="false" width="500px">
-			<ConstantTypeTeacherEdit v-if="show" :show.sync="show" @getData="getData()" :editid="editid"></ConstantTypeTeacherEdit>
+			<ConstantItemEdit v-if="show" :show.sync="show" @getData="getData()" :editid="editid"></ConstantItemEdit>
 		</el-dialog>
 	</div>
 </template>
 
 <script>
-	import ConstantTypeTeacherEdit from '@/views/basic-constant/constant-type-teacher/edit'
+	import ConstantItemEdit from '@/views/basic-constant/constant-item/edit'
 	export default {
-		name: 'ConstantTypeTeacher',
+		name: 'ConstantType',
 		data() {
 			return {
 				search: {
@@ -72,14 +76,14 @@
 			}
 		},
 		components: {
-			ConstantTypeTeacherEdit
+			ConstantItemEdit
 		},
 		created() {
 			this.getData()
 		},
 		methods: {
 			getData() {
-				this.axios.get('/constant-type/list', response => {
+				this.axios.get('/constant-item/list', response => {
 					this.result.tableData = response.obj.records
 					this.result.pages = response.obj.pages
 				}, this.query)
@@ -90,17 +94,17 @@
 				this.getData()
 			},
 			handleEdit(id) {
-				this.title = '修改常数类别'
+				this.title = '修改常数项'
 				this.editid = id
 				this.show = true
 			},
 			add() {
-				this.title = '添加常数类别'
+				this.title = '添加常数项'
 				this.editid = null
 				this.show = true
 			},
 			handleDelete(id) {
-				this.axios.del('/constant-type/del', response => {
+				this.axios.del('/constant-item/del', response => {
 					this.getData()
 				}, {
 					id: id
@@ -118,7 +122,7 @@
 					for (let i = 0; i < this.selectedrow.length; i++) {
 						ids.push(this.selectedrow[i].id)
 					}
-					this.axios.del('/constant-type/batchdel', response => {
+					this.axios.del('/constant-item/batchdel', response => {
 						this.getData()
 					}, {
 						ids: ids
@@ -126,7 +130,7 @@
 				}
 			},
 			handleBack(id) {
-				this.axios.del('/constant-type/back', response => {
+				this.axios.del('/constant-item/back', response => {
 					this.getData()
 				}, {
 					id: id

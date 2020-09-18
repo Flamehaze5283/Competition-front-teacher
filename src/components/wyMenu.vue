@@ -37,10 +37,8 @@
 		<i class="el-icon-document-copy"></i>
         <span>基本信息管理</span>
       </template>
-        <el-menu-item index="/constant-type-teacher">教师常数类别管理</el-menu-item>
-        <el-menu-item index="/constant-item-teacher">教师常数项目管理</el-menu-item>
-        <el-menu-item index="/constant-type-student">学生常数类别管理</el-menu-item>
-        <el-menu-item index="/constant-item-student">学生常数项目管理</el-menu-item>
+        <el-menu-item index="/constant-type">常数类别管理</el-menu-item>
+        <el-menu-item index="/constant-item">常数项目管理</el-menu-item>
 		<!--        <el-menu-item index="/registlevel">挂号级别</el-menu-item>
 		        <el-menu-item index="/dept">科室管理</el-menu-item> -->
     </el-submenu>

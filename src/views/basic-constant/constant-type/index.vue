@@ -42,15 +42,15 @@
 		 :current-page.sync="query.pageNo" :page-size="query.pageSize" @current-change="getData()">
 		</el-pagination>
 		<el-dialog :title="title" :visible.sync="show" :close-on-click-modal="false" width="500px">
-			<ConstantTypeStudentEdit v-if="show" :show.sync="show" @getData="getData()" :editid="editid"></ConstantTypeStudentEdit>
+			<ConstantTypeEdit v-if="show" :show.sync="show" @getData="getData()" :editid="editid"></ConstantTypeEdit>
 		</el-dialog>
 	</div>
 </template>
 
 <script>
-	import ConstantTypeStudentEdit from '@/views/basic-constant/constant-type-student/edit'
+	import ConstantTypeEdit from '@/views/basic-constant/constant-type/edit'
 	export default {
-		name: 'ConstantTypeStudent',
+		name: 'ConstantType',
 		data() {
 			return {
 				search: {
@@ -72,7 +72,7 @@
 			}
 		},
 		components: {
-			ConstantTypeStudentEdit
+			ConstantTypeEdit
 		},
 		created() {
 			this.getData()

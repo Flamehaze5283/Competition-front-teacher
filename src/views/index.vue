@@ -1,9 +1,9 @@
 <template>
 	<el-container class="wrap">
-		<el-header class="header">
+		<el-header class="header" id="head">
 			<el-row>
-				<el-col :span="20">大学生学科竞赛教师端</el-col>
-				<el-col :span="4">
+				<el-col :span="16" :offset="4">大学生学科竞赛教师端</el-col>
+				<el-col :span="2">
 					<el-dropdown split-button type="primary" @command="handleCommand">
 							{{getUsername}}
 						<el-dropdown-menu slot="dropdown">
@@ -88,9 +88,15 @@
 		line-height: 60px;
 		font-size: 1.5rem;
 		font-weight: bold;
+		text-align: center;
 	}
 
 	.left {
 		border-right: 1px solid #919191;
+	}
+	
+	#head {
+		background-color: #06c5ff;
+		color: white;
 	}
 </style>

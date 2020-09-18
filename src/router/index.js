@@ -15,24 +15,14 @@ export default new Router({
 				component: () => import('@/views/role')
 			},
 			{
-				path: '/constant-item-teacher',
-				name: 'ConstantItemTeacher',
-				component: () => import('@/views/basic-constant/constant-item-teacher')
+				path: '/constant-item',
+				name: 'ConstantItem',
+				component: () => import('@/views/basic-constant/constant-item')
 			},
 			{
-				path: '/constant-item-student',
-				name: 'ConstantItemStudent',
-				component: () => import('@/views/basic-constant/constant-item-student')
-			},
-			{
-				path: '/constant-type-teacher',
-				name: 'ConstantTypeTeacher',
-				component: () => import('@/views/basic-constant/constant-type-teacher')
-			},
-			{
-				path: '/constant-type-student',
-				name: 'ConstantTypeStudent',
-				component: () => import('@/views/basic-constant/constant-type-student')
+				path: '/constant-type',
+				name: 'ConstantType',
+				component: () => import('@/views/basic-constant/constant-type')
 			}]
 		}
 		// {

@@ -25,7 +25,7 @@
 
 <script>
 	export default {
-		name: 'ConstantItemStudentEdit',
+		name: 'ConstantItemEdit',
 		props: ['editid'],
 		data() {
 			return {
