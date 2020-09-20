@@ -80,8 +80,8 @@
 		methods: {
 			getData() {
 				this.axios.get('/constant-type/list', response => {
-					this.result.tableData = response.obj.records
-					this.result.pages = response.obj.pages
+					this.result.tableData = response.data.records
+					this.result.pages = response.data.pages
 				}, this.query)
 			},
 			searchData() {

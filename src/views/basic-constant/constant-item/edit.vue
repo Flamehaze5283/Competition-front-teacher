@@ -72,11 +72,11 @@
 				this.url = '/constant-item/update'
 				// 通过id 读原始数据
 				this.axios.get('/constant-item/getById', response => {
-					this.form.id = response.obj.id
-					this.form.typeId = response.obj.typeId
-					this.form.code = response.obj.code
-					this.form.name = response.obj.name
-					this.form.sort = response.obj.sort
+					this.form.id = response.data.id
+					this.form.typeId = response.data.typeId
+					this.form.code = response.data.code
+					this.form.name = response.data.name
+					this.form.sort = response.data.sort
 				}, {
 					id: this.editid
 				})
@@ -96,7 +96,7 @@
 			},
 			getConstantTypes() {
 				this.axios.get('/constant-type/list', response => {
-					this.options = response.obj
+					this.options = response.data
 				}, {
 					withPage: 0
 				})

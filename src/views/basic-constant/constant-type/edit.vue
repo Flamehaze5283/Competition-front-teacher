@@ -43,9 +43,9 @@
         this.url = '/constant-type/update'
         // 通过id 读原始数据
         this.axios.get('/constant-type/getById',response => {
-		  this.form.id = response.obj.id
-          this.form.code = response.obj.code
-          this.form.name = response.obj.name
+		  this.form.id = response.data.id
+          this.form.code = response.data.code
+          this.form.name = response.data.name
         },{id:this.editid})
       }
     },

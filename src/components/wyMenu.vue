@@ -63,11 +63,11 @@
 		}
 	},
     created() {
-        this.axios.post('/ums-permission/userPermissionList',response =>{
-          this.menus = response.obj
-        },{
+        // this.axios.post('/ums-permission/userPermissionList',response =>{
+        //   this.menus = response.obj
+        // },{
 
-        })
+        // })
     }
   }
 </script>
