@@ -1,22 +1,128 @@
 <template>
 	<div>
-		
+		<el-steps :active="active" finish-status="success" align-center>
+			<el-step title="填写竞赛信息"></el-step>
+			<el-step title="创建报名表"></el-step>
+			<el-step title="预览报名表"></el-step>
+			<el-step title="创建成功"></el-step>
+		</el-steps>
+
+		<div id="form-add">
+			<el-form ref="form" :model="form" label-width="80px">
+				<el-form-item label="竞赛名称">
+					<el-input v-model="form.name"></el-input>
+				</el-form-item>
+				<el-form-item label="竞赛类别">
+					<el-select v-model="form.region" placeholder="请选择类别">
+						<el-option label="一类竞赛" value="1"></el-option>
+						<el-option label="二类竞赛" value="2"></el-option>
+						<el-option label="三类竞赛" value="3"></el-option>
+						<el-option label="四类竞赛" value="4"></el-option>
+						<el-option label="五类竞赛" value="5"></el-option>
+					</el-select>
+				</el-form-item>
+				<el-form-item label="竞赛级别">
+					<el-select v-model="form.region" placeholder="请选择级别">
+						<el-option label="国家级" value="1"></el-option>
+						<el-option label="省级" value="2"></el-option>
+						<el-option label="校级" value="3"></el-option>
+						<el-option label="院级" value="4"></el-option>
+					</el-select>
+				</el-form-item>
+				<el-form-item label="竞赛详情">
+					<el-input type="textarea" v-model="form.desc"></el-input>
+				</el-form-item>
+				<el-form-item label="报名时间">
+					<el-col :span="7">
+						<el-date-picker type="date" v-model="form.date1" style="width: 100%;"></el-date-picker>
+					</el-col>
+					<el-col class="line" :span="1">-</el-col>
+					<el-col :span="7">
+						<el-date-picker type="date" v-model="form.date2" style="width: 100%;"></el-date-picker>
+					</el-col>
+				</el-form-item>
+				<el-form-item label="负责教师">
+					<el-select v-model="form.region" placeholder="请选择负责教师">
+						<el-option label="张炳" value="1"></el-option>
+						<el-option label="穆运峰" value="2"></el-option>
+						<el-option label="窦燕" value="3"></el-option>
+						<el-option label="景荣" value="4"></el-option>
+						<el-option label="冯建周" value="5"></el-option>
+					</el-select>
+				</el-form-item>
+				<!-- 			<el-form-item label="即时配送">
+							<el-switch v-model="form.delivery"></el-switch>
+						</el-form-item> -->
+				<!-- 			<el-form-item label="活动性质">
+							<el-checkbox-group v-model="form.type">
+								<el-checkbox label="美食/餐厅线上活动" name="type"></el-checkbox>
+								<el-checkbox label="地推活动" name="type"></el-checkbox>
+								<el-checkbox label="线下主题活动" name="type"></el-checkbox>
+								<el-checkbox label="单纯品牌曝光" name="type"></el-checkbox>
+							</el-checkbox-group>
+						</el-form-item> -->
+				<!-- 			<el-form-item label="特殊资源">
+							<el-radio-group v-model="form.resource">
+								<el-radio label="线上品牌商赞助"></el-radio>
+								<el-radio label="线下场地免费"></el-radio>
+							</el-radio-group>
+						</el-form-item>
+						<el-form-item>
+							<el-button type="primary" @click="onSubmit">立即创建</el-button>
+							<el-button>取消</el-button>
+						</el-form-item> -->
+				<el-form-item style="margin-top: 20%;margin-left: 22.5%;">
+					<el-button type="primary" @click="next">下一步</el-button>
+					<el-button @click="exit">取消</el-button>
+				</el-form-item>
+			</el-form>
+		</div>
+
+
+
 	</div>
 </template>
 
 <script>
-  export default {
-    name: 'AddCompetition',
-    data() {
-      return {
-
-      }
-    },
-    methods: {
-
-    }
-  }
+	export default {
+		name: 'AddCompetition',
+		data() {
+			return {
+				active: 0,
+				success: false,
+				form: {
+					name: '',
+					region: '',
+					date1: '',
+					date2: '',
+					delivery: false,
+					type: [],
+					resource: '',
+					desc: ''
+				}
+			}
+		},
+		methods: {
+			next() {
+				if (this.active++ > 3) this.active = 0;
+			}
+		}
+	}
 </script>
 
 <style>
+	* {
+		margin: 0;
+		padding: 0;
+	}
+
+	#form-add {
+		width: 500px;
+		margin-top: 100px;
+		margin-left: 32%;
+	}
+
+	.line {
+		text-align: center;
+	}
 </style>
