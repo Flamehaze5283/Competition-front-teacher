@@ -23,6 +23,11 @@ export default new Router({
 				path: '/constant-type',
 				name: 'ConstantType',
 				component: () => import('@/views/basic-constant/constant-type')
+			},
+			{
+				path: '/add-competition',
+				name: 'AddCompetition',
+				component: () => import('@/views/competition/add-competition')
 			}]
 		}
 		// {

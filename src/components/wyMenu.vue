@@ -22,7 +22,7 @@
         <span>学科竞赛管理</span>
       </template>
         <el-menu-item index="/regist"><i class="el-icon-tickets"></i>竞赛列表</el-menu-item>
-        <el-menu-item index="/fee"><i class="el-icon-circle-plus"></i>创办竞赛</el-menu-item>
+        <el-menu-item index="/add-competition"><i class="el-icon-circle-plus"></i>创办竞赛</el-menu-item>
     </el-submenu>
 
     <el-menu-item index="/role">
