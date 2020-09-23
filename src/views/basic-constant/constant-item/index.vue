@@ -84,7 +84,6 @@
 		methods: {
 			getData() {
 				this.axios.get('/constant-item/list', response => {
-					console.log(response.data)
 					this.result.tableData = response.data.records
 					this.result.pages = response.data.pages
 				}, this.query)
