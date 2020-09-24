@@ -14,11 +14,8 @@
 				</el-form-item>
 				<el-form-item label="竞赛类别">
 					<el-select v-model="form.type" placeholder="请选择类别">
-						<el-option label="一类竞赛" value="1"></el-option>
-						<el-option label="二类竞赛" value="2"></el-option>
-						<el-option label="三类竞赛" value="3"></el-option>
-						<el-option label="四类竞赛" value="4"></el-option>
-						<el-option label="五类竞赛" value="5"></el-option>
+						<el-option label="个人赛" value="1"></el-option>
+						<el-option label="团队赛" value="2"></el-option>
 					</el-select>
 				</el-form-item>
 				<el-form-item label="竞赛级别">
@@ -30,7 +27,7 @@
 					</el-select>
 				</el-form-item>
 				<el-form-item label="竞赛详情">
-					<el-button size="mini" type="primary" plain @click="handleEdit">点击编辑详情</el-button>
+					<el-button size="mini" type="primary" plain @click="handleEdit()">点击编辑详情</el-button>
 				</el-form-item>
 				<el-form-item label="报名时间">
 					<el-col :span="9">
@@ -51,11 +48,13 @@
 					</el-select>
 				</el-form-item>
 				<el-form-item label="上传图标">
-					<el-upload class="avatar-uploader" action="https://jsonplaceholder.typicode.com/posts/" :show-file-list="false"
-					 :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
-						<img v-if="form.image" :src="form.image" class="avatar">
-						<i v-else class="el-icon-plus avatar-uploader-icon"></i>
+					<el-upload action="http://localhost:8080/img/upload" :auto-upload="false" :limit="1" list-type="picture-card" :on-preview="handlePictureCardPreview"
+					 :on-remove="handleRemove" :on-change="changefile">
+						<i class="el-icon-plus"></i>
 					</el-upload>
+					<el-dialog :visible.sync="dialogVisible">
+						<img width="100%" :src="dialogImageUrl" alt="">
+					</el-dialog>
 				</el-form-item>
 				<el-form-item style="margin-top: 25px;margin-left: 22.5%;">
 					<el-button type="primary" @click="nextAndSave()">下一步</el-button>
@@ -86,9 +85,11 @@
 					endTime: '',
 					detail: '',
 					teacherId: '',
-					image: '',
+					fileImage: '',
 					detail: ''
 				},
+				dialogImageUrl: '',
+				dialogVisible: false,
 				show: false,
 				title: '编辑竞赛详情'
 			}
@@ -97,26 +98,16 @@
 			next() {
 				if (this.active++ > 3) this.active = 0;
 			},
-			handleAvatarSuccess(res, file) {
-				this.image = URL.createObjectURL(file.raw);
+			handleRemove(file, fileList) {
+				console.log("删除文件")
+				console.log(file, fileList);
 			},
-			beforeAvatarUpload(file) {
-				const isJPG = file.type === 'image/jpeg';
-				const isLt2M = file.size / 1024 / 1024 < 2;
-
-				if (!isJPG) {
-					this.$message.error('上传头像图片只能是 JPG 格式!');
-				}
-				if (!isLt2M) {
-					this.$message.error('上传头像图片大小不能超过 2MB!');
-				}
-				return isJPG && isLt2M;
+			handlePictureCardPreview(file) {
+				this.dialogImageUrl = file.url;
+				this.dialogVisible = true;
 			},
 			handleEdit() {
 				this.show = true
-			},
-			updateDetail(detail) {
-				this.form.detail = detail
 			},
 			nextAndSave() {
 				this.axios.post('/competition/save-competition', response => {
@@ -124,6 +115,10 @@
 						this.$router.replace('/')
 					} 
 				}, this.form)
+			},
+			changefile(file, fileList) {
+				console.log(file)
+				this.form.fileImage = file.raw
 			}
 		},
 		components: {
