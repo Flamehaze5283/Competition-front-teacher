@@ -38,6 +38,11 @@ export default new Router({
 					path: '/competition-detail',
 					name: 'CompetitionDetail',
 					component: () => import('@/views/competition/detail')
+				},
+				{
+					path: '/create-competition',
+					name: 'CreateCompetition',
+					component: () => import('@/views/competition/create-competition')
 				}
 			]
 		}

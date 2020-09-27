@@ -14,16 +14,18 @@
 				</el-form-item>
 				<el-form-item label="竞赛类别">
 					<el-select v-model="form.type" placeholder="请选择类别">
-						<el-option label="个人赛" value="1"></el-option>
-						<el-option label="团队赛" value="2"></el-option>
+<!-- 						<el-option label="个人赛" value="1"></el-option>
+						<el-option label="团队赛" value="2"></el-option> -->
+						<el-option v-for="type in types" :key="type.id" :label="type.name" :value="type.code"></el-option>
 					</el-select>
 				</el-form-item>
 				<el-form-item label="竞赛级别">
 					<el-select v-model="form.level" placeholder="请选择级别">
-						<el-option label="国家级" value="1"></el-option>
+	<!-- 					<el-option label="国家级" value="1"></el-option>
 						<el-option label="省级" value="2"></el-option>
 						<el-option label="校级" value="3"></el-option>
-						<el-option label="院级" value="4"></el-option>
+						<el-option label="院级" value="4"></el-option> -->
+						<el-option v-for="level in levels" :key="level.id" :label="level.name" :value="level.code"></el-option>
 					</el-select>
 				</el-form-item>
 				<el-form-item label="竞赛详情">
@@ -40,16 +42,12 @@
 				</el-form-item>
 				<el-form-item label="负责教师">
 					<el-select v-model="form.teacherId" placeholder="请选择负责教师">
-						<el-option label="张炳" value="1"></el-option>
-						<el-option label="穆运峰" value="2"></el-option>
-						<el-option label="窦燕" value="3"></el-option>
-						<el-option label="景荣" value="4"></el-option>
-						<el-option label="冯建周" value="5"></el-option>
+						<el-option v-for="teacher in teachers" :key="teacher.id" :label="teacher.realname" :value="teacher.teacherId"></el-option>
 					</el-select>
 				</el-form-item>
 				<el-form-item label="上传图标">
 					<el-upload action="http://localhost:8080/img/upload" :auto-upload="false" :limit="1" list-type="picture-card" :on-preview="handlePictureCardPreview"
-					 :on-remove="handleRemove" :on-change="changefile">
+					 :on-change="changefile">
 						<i class="el-icon-plus"></i>
 					</el-upload>
 					<el-dialog :visible.sync="dialogVisible">
@@ -91,17 +89,20 @@
 				dialogImageUrl: '',
 				dialogVisible: false,
 				show: false,
-				title: '编辑竞赛详情'
+				title: '编辑竞赛详情',
+				teachers: [],
+				types: [],
+				levels: []
 			}
 		},
 		methods: {
-			next() {
-				if (this.active++ > 3) this.active = 0;
-			},
-			handleRemove(file, fileList) {
-				console.log("删除文件")
-				console.log(file, fileList);
-			},
+			// next() {
+			// 	if (this.active++ > 3) this.active = 0;
+			// },
+			// handleRemove(file, fileList) {
+			// 	console.log("删除文件")
+			// 	console.log(file, fileList);
+			// },
 			handlePictureCardPreview(file) {
 				this.dialogImageUrl = file.url;
 				this.dialogVisible = true;
@@ -112,7 +113,7 @@
 			nextAndSave() {
 				this.axios.post('/competition/save-competition', response => {
 					if(response.code === 200) {
-						this.$router.replace('/')
+						this.$router.replace('/create-competition')
 					} 
 				}, this.form)
 			},
@@ -123,6 +124,17 @@
 		},
 		components: {
 			DetailEdit
+		},
+		created() {
+			this.axios.get('/teacher/list', response => {
+				this.teachers = response.data
+			})
+			this.axios.get('/constant-item/get-items', response => {
+				this.types = response.data
+			}, {'typeName': '竞赛类别'})
+			this.axios.get('/constant-item/get-items', response => {
+				this.levels = response.data
+			}, {'typeName': '竞赛级别'})
 		}
 	}
 </script>
