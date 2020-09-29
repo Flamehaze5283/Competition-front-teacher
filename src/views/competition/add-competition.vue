@@ -14,17 +14,11 @@
 				</el-form-item>
 				<el-form-item label="竞赛类别">
 					<el-select v-model="form.type" placeholder="请选择类别">
-<!-- 						<el-option label="个人赛" value="1"></el-option>
-						<el-option label="团队赛" value="2"></el-option> -->
 						<el-option v-for="type in types" :key="type.id" :label="type.name" :value="type.code"></el-option>
 					</el-select>
 				</el-form-item>
 				<el-form-item label="竞赛级别">
 					<el-select v-model="form.level" placeholder="请选择级别">
-	<!-- 					<el-option label="国家级" value="1"></el-option>
-						<el-option label="省级" value="2"></el-option>
-						<el-option label="校级" value="3"></el-option>
-						<el-option label="院级" value="4"></el-option> -->
 						<el-option v-for="level in levels" :key="level.id" :label="level.name" :value="level.code"></el-option>
 					</el-select>
 				</el-form-item>
@@ -56,7 +50,6 @@
 				</el-form-item>
 				<el-form-item style="margin-top: 25px;margin-left: 22.5%;">
 					<el-button type="primary" @click="nextAndSave()">下一步</el-button>
-					<!-- <el-button @click="">取消</el-button> -->
 				</el-form-item>
 			</el-form>
 			<el-dialog id="edit-dialog" :title="title" :visible.sync="show" :close-on-click-modal="false" width="950px">
@@ -113,7 +106,12 @@
 			nextAndSave() {
 				this.axios.post('/competition/save-competition', response => {
 					if(response.code === 200) {
-						this.$router.replace('/create-competition')
+						this.$router.push({
+							path: '/create-competition',
+							params: {
+								'name': this.form.name
+							}
+						})
 					} 
 				}, this.form)
 			},
@@ -131,6 +129,7 @@
 			})
 			this.axios.get('/constant-item/get-items', response => {
 				this.types = response.data
+				console.log(response.data)
 			}, {'typeName': '竞赛类别'})
 			this.axios.get('/constant-item/get-items', response => {
 				this.levels = response.data
