@@ -21,6 +21,7 @@
 					<div id="form" class="form-title">{{this.name}}</div>
 					<div v-for="part in this.parts" :key="part.name">
 						<div v-if="JSON.parse(part.code).type == 'el-input'">
+							<el-col :span="24" id="form" class="partner-detail">{{part.name}}</el-col>
 							<el-col :span="24" id="form">
 								<div v-for="label in JSON.parse(part.code).label" style="padding-left: 25%;">
 									<el-col :span="2" :offset="1">{{label}}</el-col>
@@ -31,7 +32,7 @@
 							</el-col>
 						</div>
 						<div v-else>
-							<el-col :span="24" id="form" class="partner-detail">队员信息</el-col>
+							<el-col :span="24" id="form" class="partner-detail">{{part.name}}</el-col>
 							<div v-for="label in JSON.parse(part.code).label" style="padding-left: 25%;">
 								<el-col :span="24" id="form">
 									<div v-for="lab in label">
@@ -42,7 +43,7 @@
 							</div>
 						</div>
 					</div>
-					<el-button type="primary" plain @click="outputChecked()">预览</el-button>
+					<el-button type="primary" plain @click="preview()">预览</el-button>
 				</el-main>
 			</el-container>
 		</el-container>
@@ -59,15 +60,10 @@
 				types: [],
 				front_components: [],
 				parts: {},
-				studentName: '张三'
+				competition_name: ''
 			}
 		},
 		methods: {
-			outputChecked() {
-				let labels = JSON.parse(this.parts[0].code).label
-				for(let label in labels)
-					console.log(labels[label])
-			},
 			updateParts() {
 				const datas = []
 				for (let i = 0; i < this.front_components.length; i++) {
@@ -80,10 +76,21 @@
 				}
 				this.parts = JSON.stringify(datas)
 				this.parts = JSON.parse(this.parts)
+			},
+			preview() {
+				this.$router.push({
+					path: '/preview-competition',
+					name: 'PreviewCompetition',
+					params: {
+						'name': this.competition_name,
+						'parts': this.parts
+					}
+				})
 			}
 		},
 		created() {
-			// this.name = this.$route.params.name + "报名表"
+			this.competition_name = this.$route.params.name
+			this.name = this.competition_name + "报名表"
 			this.axios.get('/constant-item/get-items', response => {
 				this.types = response.data
 			}, {

@@ -43,6 +43,11 @@ export default new Router({
 					path: '/create-competition',
 					name: 'CreateCompetition',
 					component: () => import('@/views/competition/create-competition')
+				},
+				{
+					path: '/preview-competition',
+					name: 'PreviewCompetition',
+					component: () => import('@/views/competition/preview-competition')
 				}
 			]
 		}

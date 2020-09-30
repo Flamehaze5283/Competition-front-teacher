@@ -108,6 +108,7 @@
 					if(response.code === 200) {
 						this.$router.push({
 							path: '/create-competition',
+							name: 'CreateCompetition',
 							params: {
 								'name': this.form.name
 							}
@@ -116,7 +117,6 @@
 				}, this.form)
 			},
 			changefile(file, fileList) {
-				console.log(file)
 				this.form.fileImage = file.raw
 			}
 		},
@@ -129,7 +129,6 @@
 			})
 			this.axios.get('/constant-item/get-items', response => {
 				this.types = response.data
-				console.log(response.data)
 			}, {'typeName': '竞赛类别'})
 			this.axios.get('/constant-item/get-items', response => {
 				this.levels = response.data
