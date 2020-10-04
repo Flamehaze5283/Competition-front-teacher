@@ -48,6 +48,11 @@ export default new Router({
 					path: '/preview-competition',
 					name: 'PreviewCompetition',
 					component: () => import('@/views/competition/preview-competition')
+				},
+				{
+					path: '/success-competition',
+					name: 'SuccessCompetition',
+					component: () => import('@/views/competition/success-competition')
 				}
 			]
 		}

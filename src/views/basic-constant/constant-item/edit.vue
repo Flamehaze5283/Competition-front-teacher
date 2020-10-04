@@ -43,8 +43,8 @@
 						},
 						{
 							min: 1,
-							max: 100,
-							message: '长度在 1 到 100 个字符',
+							max: 1000,
+							message: '长度在 1 到 1000 个字符',
 							trigger: 'blur'
 						}
 					],

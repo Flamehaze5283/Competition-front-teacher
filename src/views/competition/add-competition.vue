@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<el-steps :active="active" finish-status="success" align-center>
+		<el-steps :active="step" finish-status="success" align-center>
 			<el-step title="填写竞赛信息"></el-step>
 			<el-step title="创建报名表"></el-step>
 			<el-step title="预览报名表"></el-step>
@@ -65,7 +65,7 @@
 		name: 'AddCompetition',
 		data() {
 			return {
-				active: 0,
+				step: 0,
 				success: false,
 				form: {
 					name: '',
@@ -76,7 +76,7 @@
 					endTime: '',
 					detail: '',
 					teacherId: '',
-					fileImage: '',
+					fileImage: ' ',
 					detail: ''
 				},
 				dialogImageUrl: '',
@@ -110,7 +110,8 @@
 							path: '/create-competition',
 							name: 'CreateCompetition',
 							params: {
-								'name': this.form.name
+								'name': this.form.name,
+								'type': this.form.type
 							}
 						})
 					} 
