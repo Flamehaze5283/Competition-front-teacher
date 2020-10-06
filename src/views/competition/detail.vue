@@ -12,7 +12,7 @@
           <div class="text item">
             <div class="clearfix">
              <el-tag class="tag1">竞赛简介</el-tag>
-             <div>{{result.tableData.detail}}</div>
+             <div v-html="detailfwb"></div>
             </div>
             <div class="clearfix">
              <el-tag class="tag1">创建时间</el-tag>
@@ -87,7 +87,8 @@
         result: {
           tableData: []
         },
-        competitionId: 0
+        competitionId: 0,
+        detailfwb: ''
       }
     },
     components:{
@@ -104,8 +105,9 @@
       ...mapGetters(['getToken']),
       getData() {
       	this.axios.get('/competition/getById', response => {
-          //console.log(response)
+          console.log(response)
       		this.result.tableData = response.data[0]
+          this.detailfwb = response.data[0].detail
       	}, {id: this.id})
       },
       back(){
