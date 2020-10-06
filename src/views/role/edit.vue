@@ -26,17 +26,17 @@
             { min: 1, max: 50, message: '长度在 1 到 50 个字符', trigger: 'blur' }
           ]
         },
-        url: '/ums-role/add'
+        url: '/teacher-role/add'
       }
     },
     created() {
       if(this.editid) {
         // 如果是修改 提交地址变成修改的提交地址
-        this.url = '/ums-role/update'
+        this.url = '/teacher-role/update'
         // 通过id 读原始数据
-        this.axios.get('/ums-role/getById',response => {
-          this.form.id = response.obj.id
-          this.form.name = response.obj.name
+        this.axios.get('/teacher-role/getById',response => {
+          this.form.id = response.data.id
+          this.form.name = response.data.name
         },{id:this.editid})
       }
     },

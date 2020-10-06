@@ -8,7 +8,7 @@
             <span>{{name}}</span>
             <el-button style="float: right; padding: 3px 0" type="text" @click="back()">返回上一页</el-button>
           </div>
-          <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image">
+          <img :src="result.tableData.image" class="image">
           <div class="text item">
             <div class="clearfix">
              <el-tag class="tag1">竞赛简介</el-tag>
@@ -34,10 +34,10 @@
              <el-tag class="tag1">竞赛类型</el-tag>
              <span>{{result.tableData.typeName}}</span>
             </div>
-            <div class="clearfix">
+            <!-- <div class="clearfix">
              <el-tag class="tag1">当前状态</el-tag>
              <span>{{result.tableData.optionList}}</span>
-            </div>
+            </div> -->
             <div class="clearfix">
              <el-tag class="tag1">负责教师</el-tag>
              <span>{{result.tableData.teacherName}}</span>
@@ -47,12 +47,26 @@
       </el-aside>
       <el-main class="right">
         <template v-if="result.tableData.type === 1">
-          <el-tag class="tag2">个人赛报名队伍</el-tag>
+          <el-row :gutter="8">
+            <el-col :span="4">
+              <el-tag class="tag2">个人赛报名队伍</el-tag>
+            </el-col>
+          	<el-col :span="4">
+          		<el-link class="download" type="success" icon="el-icon-download" :href="personDownload()">导出</el-link>
+          	</el-col>
+          </el-row>
           <Person :competitionId="competitionId"></Person>
         </template>
         <template v-else>
-          <el-tag class="tag2">团体赛报名队伍</el-tag>
-          <Team></Team>
+          <el-row :gutter="8">
+            <el-col :span="4">
+              <el-tag class="tag2">团体赛报名队伍</el-tag>
+            </el-col>
+          	<el-col :span="4">
+          		<el-link class="download" type="success" icon="el-icon-download" :href="teamDownload()">导出</el-link>
+          	</el-col>
+          </el-row>
+          <Team :competitionId="competitionId"></Team>
         </template>
       </el-main>
     </el-container>
@@ -62,6 +76,8 @@
 <script>
   import Person from '@/views/competition/person'
   import Team from '@/views/competition/team'
+  import { mapMutations, mapGetters } from 'vuex'
+  import axios from 'axios'
   export default {
     name: 'CompetitionDetail',
     data() {
@@ -85,8 +101,10 @@
       this.getData()
     },
     methods:{
+      ...mapGetters(['getToken']),
       getData() {
       	this.axios.get('/competition/getById', response => {
+          //console.log(response)
       		this.result.tableData = response.data[0]
       	}, {id: this.id})
       },
@@ -95,8 +113,11 @@
           path: '/competition'
         })
       },
-      test() {
-        console.log(this.result.tableData)
+      personDownload(){
+        return axios.defaults.baseURL + '/download/person?token=' + this.getToken() + '&competitionId=' + this.competitionId
+      },
+      teamDownload(){
+        return axios.defaults.baseURL + '/download/team?token=' + this.getToken() + '&competitionId=' + this.competitionId
       }
     }
   }
@@ -134,6 +155,9 @@
   .tag1{
     margin-top: 5px;
     margin-bottom: 5px;
+  }
+  .download{
+    height: 35px;
   }
   .text {
       font-size: 14px;

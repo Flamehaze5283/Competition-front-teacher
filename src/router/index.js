@@ -53,13 +53,38 @@ export default new Router({
 					path: '/success-competition',
 					name: 'SuccessCompetition',
 					component: () => import('@/views/competition/success-competition')
+				},
+				{
+					path: '/teacher',
+					name: 'Teacher',
+					component: () => import('@/views/teacher')
+				},
+				{
+					path: '/permission',
+					name: 'Permission',
+					component: () => import('@/views/permission')
+				},
+				{
+					path: '/teacher-role',
+					name: 'TeacherRole',
+					component: () => import('@/views/teacher/teacher-role')
+				},
+				{
+					path: '/role-permiss',
+					name: 'RolePermiss',
+					component: () => import('@/views/role/role-permiss')
 				}
 			]
+		},
+		{
+			path: '/login',
+			name: 'Login',
+			component: () => import('@/views/login')
+		},
+		{
+			path: '/passwd',
+			name: 'Passwd',
+			component: () => import('@/views/login/passwd')
 		}
-		// {
-		// 	path: '/login',
-		// 	name: 'Login',
-		// 	component: () => import('@/views/login/')
-		// }
 	]
 })

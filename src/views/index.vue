@@ -3,14 +3,14 @@
 		<el-header class="header" id="head">
 			<el-row>
 				<el-col :span="16" :offset="4">大学生学科竞赛教师端</el-col>
-				<el-col :span="2">
-					<el-dropdown split-button type="primary" @command="handleCommand">
-							{{getUsername}}
-						<el-dropdown-menu slot="dropdown">
-							<el-dropdown-item command="Personal">个人设置</el-dropdown-item>
-							<el-dropdown-item command="Logout">退出</el-dropdown-item>
-						</el-dropdown-menu>
-					</el-dropdown>
+				<el-col :span="4">
+				  <el-dropdown split-button type="info" @command="handleCommand">
+				      欢迎你，{{realname}}老师
+				    <el-dropdown-menu slot="dropdown">
+				      <!-- <el-dropdown-item command="Personal">个人设置</el-dropdown-item> -->
+				      <el-dropdown-item command="Logout">退出</el-dropdown-item>
+				    </el-dropdown-menu>
+				  </el-dropdown>
 				</el-col>
 			</el-row>
 		</el-header>
@@ -32,7 +32,7 @@
 		name: 'Index',
 		data() {
 			return {
-				username: ''
+				realname: ''
 			}
 		},
 		components: {
@@ -44,10 +44,9 @@
 				//this.$alert("退出");
 				//清空token （axios header ，vuex sessionStorage）
 				// axios
-				this.axios.post('/ums-user/logout', response => {
+				this.axios.post('/teacher/logout', response => {
 					this.axios.setToken(null)
 					this.setToken(null)
-					// this.setUsername(null)
 					this.$router.push({
 						path: '/login'
 					})
@@ -59,19 +58,16 @@
 				if (command === 'Logout') {
 					this.logout();
 				}
+			},
+			getName(){
+			  this.axios.get('/teacher/getname',res => {
+			    //console.log(res)
+			    this.realname = res.data
+			  })
 			}
-			// getRealName() {
-			// 	this.axios.get('/ums-user/getRealName', response => {
-			// 		  console.log('this.getusername: ' + this.getUsername)
-			// 		  let user = response.obj
-			// 		  console.log(this.login.username)
-			// 		  this.setUsername('abcd')
-			// 	}, {
-			// 		 "username": this.getUsername
-			// 	})
-			// }
 		},
 		created() {
+			this.getName()
 		},
 		computed: {
 			...mapGetters(['getUsername'])

@@ -31,8 +31,8 @@
       </el-table-column>
       <el-table-column label="创建者" prop="teacherName">
       </el-table-column>
-      <el-table-column label="状态" prop="optionList">
-      </el-table-column>
+      <!-- <el-table-column label="状态" prop="optionList">
+      </el-table-column> -->
 
 			<el-table-column label="是否有效" width="100">
 				<template slot-scope="scope">
@@ -89,7 +89,7 @@
 		},
 		methods: {
 			getData() {
-				this.axios.get('/competition/list', response => {
+				this.axios.post('/competition/list', response => {
           //console.log(response)
 					this.result.tableData = response.data.records
 					this.result.pages = response.data.pages

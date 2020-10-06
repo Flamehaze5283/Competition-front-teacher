@@ -27,6 +27,10 @@ export default {
     }).then(response => {
       if (response.data.code === 200) {
         callback(response.data)
+      }else if(response.code === 401){
+        $router.push({
+          path: '/login'
+        })
       } else {
         Message.error(response.data.message)
       }

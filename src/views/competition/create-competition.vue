@@ -73,8 +73,6 @@
 					studentId: [],
 					captainId: '',
 					teamName: '',
-					optionItem: '',
-					optionValue: ''
 				},
 				step: 1,
 				name: '测试比赛报名表',

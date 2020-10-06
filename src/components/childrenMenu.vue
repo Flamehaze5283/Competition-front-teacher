@@ -1,27 +1,23 @@
 <template>
- <el-menu-item  :index="menu.url">{{menu.name}}
-   <!-- <el-submenu v-for="menu in menus"  :index="menu.id">
-      <template slot="title">
-        <span>{{menu.name}}</span>
-      </template>
-    </el-submenu> -->
-    
-     <!-- <ChilrenMenu v-for="item in menu.children" :menu="item"></ChilrenMenu> -->
-    
- </el-menu-item>
+  <el-menu-item :index="menu.url">
+     <i :class="iocnhh"></i>
+     {{menu.name}}
+  </el-menu-item>
 </template>
 
 <script>
   export default {
     name: 'ChilrenMenu',
     props: [
-        'menu'
+        'menu',
+        'iocnhh'
     ],
     components: {
 
     },
     data() {
       return {
+
       }
     },
     methods: {
