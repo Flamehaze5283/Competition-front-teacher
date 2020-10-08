@@ -45,10 +45,10 @@
 					</el-col>
 				</div>
 			</div>
-			<div id="button">
-				<el-button type="danger" plain @click="reEdit()">重新编辑</el-button>
-				<el-button type="primary" plain @click="saveCompetition()">确认发布</el-button>
-			</div>
+		</div>
+		<div id="button">
+			<el-button type="danger" plain @click="reEdit()">重新编辑</el-button>
+			<el-button type="primary" plain @click="saveCompetition()">确认发布</el-button>
 		</div>
 	</div>
 </template>
@@ -140,6 +140,7 @@
 
 	#button {
 		padding-top: 35%;
+		text-align: center;
 	}
 
 	.create-header {

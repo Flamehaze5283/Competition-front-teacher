@@ -30,6 +30,11 @@ export default new Router({
 					component: () => import('@/views/competition/add-competition')
 				},
 				{
+					path: '/edit-competition',
+					name: 'EditCompetition',
+					component: () => import('@/views/competition/edit-competition')
+				},
+				{
 					path: '/competition',
 					name: 'Competition',
 					component: () => import('@/views/competition')

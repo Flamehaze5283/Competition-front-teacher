@@ -1,11 +1,5 @@
 <template>
 	<div>
-		<el-steps :active="step" finish-status="success" align-center>
-			<el-step title="填写竞赛信息"></el-step>
-			<el-step title="创建报名表"></el-step>
-			<el-step title="预览报名表"></el-step>
-			<el-step title="创建成功"></el-step>
-		</el-steps>
 		<div id="form-add">
 			<el-form ref="form" :model="form" label-width="80px">
 				<el-form-item label="竞赛名称">
@@ -46,7 +40,7 @@
 					</el-upload>
 				</el-form-item>
 				<el-form-item style="margin-top: 25px;margin-left: 22.5%;">
-					<el-button type="primary" @click="nextAndSave()">下一步</el-button>
+					<el-button type="primary" @click="update()">提交修改</el-button>
 				</el-form-item>
 			</el-form>
 			<el-dialog id="edit-dialog" :title="title" :visible.sync="show" :close-on-click-modal="false" width="950px">
@@ -59,12 +53,13 @@
 <script>
 	import DetailEdit from '@/views/competition/detail-edit'
 	export default {
-		name: 'EditCompetition',
+		name: 'AddCompetition',
 		data() {
 			return {
 				step: 0,
 				success: false,
 				form: {
+					id: '',
 					name: '',
 					type: '',
 					level: '',
@@ -72,8 +67,8 @@
 					startTime: '',
 					endTime: '',
 					detail: '',
-					teacherId: '',
 					image: '',
+					teacherId: '',
 					detail: ''
 				},
 				file: null,
@@ -88,51 +83,32 @@
 			handleAvatarSuccess(res, file) {
 				this.imageUrl = URL.createObjectURL(file.raw);
 			},
-			nextAndSave() {
+			showParams() {
+				console.log(this.form)
+			},
+			handleEdit() {
+				this.show = true
+			},
+			update() {
 				if(this.file != null) {
 					this.axios.post("/competition/upload-image", res => {
 						this.form.image = res.data.data
 						this.file = null
-						this.axios.post('/competition/save-competition', response => {
+						this.axios.post('/competition/update-competition', response => {
 							if (response.code === 200) {
-								this.$router.push({
-									path: '/create-competition',
-									name: 'CreateCompetition',
-									params: {
-										'name': this.form.name,
-										'type': this.form.type
-									}
-								})
+								this.$router.replace('/competition')
 							}
 						}, this.form)
 					}, {
 						'file': this.file.raw
 					})
 				} else {
-					this.axios.post('/competition/save-competition', response => {
+					this.axios.post('/competition/update-competition', response => {
 						if (response.code === 200) {
-							this.$router.push({
-								path: '/create-competition',
-								name: 'CreateCompetition',
-								params: {
-									'name': this.form.name,
-									'type': this.form.type
-								}
-							})
+							this.$router.replace('/competition')
 						}
 					}, this.form)
 				}
-			},
-			handleEdit() {
-				this.show = true
-			},
-			uploadImage() {
-				this.axios.post("/competition/upload-image", res => {
-					this.form.image = res.data.data
-					this.file = null
-				}, {
-					'file': this.file.raw
-				})
 			},
 			changeImage(file, fileList) {
 				const isJPG = file.raw.type === 'image/jpeg'
@@ -160,13 +136,18 @@
 			})
 			this.axios.get('/constant-item/get-items', response => {
 				this.types = response.data
-			}, {
-				'typeName': '竞赛类别'
-			})
+			}, {'typeName': '竞赛类别'})
 			this.axios.get('/constant-item/get-items', response => {
 				this.levels = response.data
-			}, {
-				'typeName': '竞赛级别'
+			}, {'typeName': '竞赛级别'})
+		},
+		mounted() {
+			this.axios.get('/competition/get-competition', response => {
+				this.form = response.data
+				this.form.type = this.form.type.toString()
+				this.form.level = this.form.level.toString()
+			},{
+				'id': this.$route.params.id
 			})
 		}
 	}
@@ -195,11 +176,11 @@
 		position: relative;
 		overflow: hidden;
 	}
-
+	
 	.avatar-uploader .el-upload:hover {
 		border-color: #409EFF;
 	}
-
+	
 	.avatar-uploader-icon {
 		font-size: 28px;
 		color: #8c939d;
@@ -208,7 +189,7 @@
 		line-height: 178px;
 		text-align: center;
 	}
-
+	
 	.avatar {
 		width: 178px;
 		height: 178px;

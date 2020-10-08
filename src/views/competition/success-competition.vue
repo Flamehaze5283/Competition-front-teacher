@@ -8,7 +8,7 @@
 		</el-steps>
 		<img id="image" src="../../assets/timg.jpg" /><br />
 		<span id="text">创建成功！！</span><br />
-		<div id="button">
+		<div id="button1">
 			<el-button type="primary" style="font-size: 20px;" plain @click="jump()">返回竞赛列表</el-button>
 		</div>
 	</div>
@@ -48,8 +48,8 @@
 		font-size: 40px;
 	}
 	
-	#button {
+	#button1 {
 		padding-top: 3%;
-		text-align: center;
+		padding-left: 45%;
 	}
 </style>
