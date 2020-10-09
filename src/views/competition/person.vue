@@ -49,6 +49,7 @@
     methods:{
       getPersonData(){
         this.axios.get('/sign/getlist',response => {
+			console.log(response.data)
           this.result.tableData = response.data
           //console.log(response)
         },{competitionId: this.competitionId})
